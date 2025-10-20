@@ -1,0 +1,14 @@
+import plagas.*
+
+
+test "Plaga de Cucarachas nivel de danio" {
+    const cucas = new PlagaDeCucarachas(poblacion = 20, pesoPromedio = 10)
+
+    assert.equals(10, cucas.nivelDeDanio())
+}
+
+test "Plaga de Cucarachas transmite enfermedades" {
+    const cucas = new PlagaDeCucarachas(poblacion = 20, pesoPromedio = 10)
+
+    assert.equals(true, cucas.transmiteEnfermedades())
+}
