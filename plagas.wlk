@@ -44,8 +44,9 @@ class Hogar {
   method esBuena() = nivelDeMugre <= (confort / 2)
   
   method reibeAtaqueDe(plaga) {
-    plaga.atacar()
+    
     nivelDeMugre += plaga.nivelDeDanio()
+    plaga.atacar()
   }
 }
 
@@ -56,12 +57,13 @@ class Huerta {
   method esBuena() = capacidadDeProduccion > nivelVariableDeProduccion
   
   method reibeAtaqueDe(plaga) {
-    plaga.atacar()
+    
     capacidadDeProduccion = 0.max(
       capacidadDeProduccion - ((plaga.nivelDeDanio() * 0.1) + if (plaga.transmiteEnfermedades())
                                                                 10
                                                               else 0)
     )
+    plaga.atacar()
   }
 }
 
@@ -71,9 +73,10 @@ class Mascota {
   method esBuena() = nivelDeSAlud > 250
   
   method reibeAtaqueDe(plaga) {
-    plaga.atacar()
+   
     nivelDeSAlud = 0.max(nivelDeSAlud - if (plaga.transmiteEnfermedades()) 10
                                    else 0)
+    plaga.atacar()
   }
 }
 
