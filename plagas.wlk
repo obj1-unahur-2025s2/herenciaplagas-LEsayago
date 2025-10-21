@@ -43,20 +43,25 @@ class Hogar {
   
   method esBuena() = nivelDeMugre <= (confort / 2)
   
-  method esAtacado(plaga) {
-    nivelDeMugre += plaga.poblacion()
+  method reibeAtaqueDe(plaga) {
+    plaga.atacar()
+    nivelDeMugre += plaga.nivelDeDanio()
   }
 }
 
 class Huerta {
   var capacidadDeProduccion
-  const nivelVariableDeProduccion
+  const nivelVariableDeProduccion = 100
   
   method esBuena() = capacidadDeProduccion > nivelVariableDeProduccion
   
-  method recibeAtaque(plaga) {
-    capacidadDeProduccion -=
-     (plaga.nivelDeDanio() * 0.1) + if (plaga.transmiteEnfermedades()) 10 else 0
+  method reibeAtaqueDe(plaga) {
+    plaga.atacar()
+    capacidadDeProduccion = 0.max(
+      capacidadDeProduccion - ((plaga.nivelDeDanio() * 0.1) + if (plaga.transmiteEnfermedades())
+                                                                10
+                                                              else 0)
+    )
   }
 }
 
@@ -65,8 +70,19 @@ class Mascota {
   
   method esBuena() = nivelDeSAlud > 250
   
-  method recibeAtaque(plaga) {
-    nivelDeSAlud = (nivelDeSAlud - if (plaga.transmiteEnfermedades()) 10
-                                   else 0).max(0)
+  method reibeAtaqueDe(plaga) {
+    plaga.atacar()
+    nivelDeSAlud = 0.max(nivelDeSAlud - if (plaga.transmiteEnfermedades()) 10
+                                   else 0)
   }
+}
+
+class Barrios {
+  const elementos = []
+  
+  method losBuenos() = elementos.filter({ e => e.esBueno() })
+  
+  method losMalos() = elementos.filter({ e => not e.esBueno() })
+  
+  method esCopado() = self.losBuenos().size() > self.losMalos().size()
 }

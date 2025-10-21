@@ -12,3 +12,4 @@ test "Plaga de Cucarachas transmite enfermedades" {
 
     assert.equals(true, cucas.transmiteEnfermedades())
 }
+
